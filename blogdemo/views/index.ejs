@@ -1,0 +1,12 @@
+<%- include('header') %>
+
+<div>msg: <%= title %></div>
+<% if (state) { %>
+  <div>hello <%= state %></div>
+  <a href="/signout">登出</a>
+<% } else { %>
+<div><a href="/users/register">注册</a></div>
+<div><a href="/users/signin">登录</a></div>
+<% } %>
+
+<%- include('footer') %>
