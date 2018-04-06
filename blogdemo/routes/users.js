@@ -7,11 +7,11 @@ var userModel = require('../lib/mysqlc')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  return res.send('respond with a resource');
 });
 
 router.get('/register', function (req, res, next) {
-  res.render('register', {msg: ''})
+  return res.render('register', {msg: ''})
 })
 
 // 注册提交
@@ -67,7 +67,7 @@ router.post('/register', function (req, res, next) {
 
 // 登录
 router.get('/signin', function (req, res, next) {
-  res.render('signin', {msg: ''})
+  return res.render('signin', {msg: ''})
 })
 
 // 登录
@@ -103,12 +103,18 @@ router.post('/signin', function (req, res, next) {
       }
       delete obj0.password
       req.session.user = obj0
-      return res.render('index', { title: '登录成功', state: obj0.username })
+      return res.redirect('/')
     }).catch(err => {
       console.log(err)
       return res.render('signin', {msg: '登录失败'})
     })
-
 })
+
+// 个人中心
+router.get('/personal', function (req, res, next) {
+  var objmsg = req.session.user
+  res.render('personal', {username: objmsg.username, avatar: objmsg.avator, moment: objmsg.moment})
+})
+
 
 module.exports = router;
