@@ -24,7 +24,7 @@ let findDataByUserName =  ( name ) => {
 
 // 将注册账号写入数据库
 let writeDataByUser = ( obj ) => {
-  let _sql = `INSERT INTO user(username,password,avator) VALUES("${obj.name}","${obj.password}","${obj.avatar}");`
+  let _sql = `INSERT INTO user(username,password,avator) VALUES("${obj.name}","${obj.password}","upload_7eb0f17c485156efad980e49259fd408.jpg");`
   return query(_sql)
 }
 

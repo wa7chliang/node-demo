@@ -5,13 +5,9 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   var state = ''
   if(req.session.user) {
-    state = req.session.user.username
+    state = req.session.user
   }
-
-  // 利用异步解决promise产生的渲染小bug
-  setTimeout(function () {
-    return res.render('index', { title: 'express', state: state })
-  },1)
+  return res.render('index', { title: 'express', state: state })
 })
 
 module.exports = router;

@@ -2,7 +2,8 @@
 
 <div>msg: <%= title %></div>
 <% if (state) { %>
-  <div>hello <%= state %></div>
+  <div>hello <%= state.username %></div>
+  <img src="/images/<%= state.avator %>" alt="">
   <a href="/signout">登出</a>
   <div><a href="/users/personal">个人中心</a></div>
 <% } else { %>

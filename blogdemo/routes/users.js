@@ -11,56 +11,98 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function (req, res, next) {
-  return res.render('register', {msg: ''})
+    return res.render('register')
 })
 
 // 注册提交
 router.post('/register', function (req, res, next) {
-  const name = req.fields.name
-  let password = req.fields.password
-  const repassword = req.fields.repassword
-  const avatar = req.files.avatar.path.split(path.sep).pop()
+  const name = req.body.username
+  let password = req.body.password
+  const repassword = req.body.repassword
+  // res.json({a: 1})
+  // const name = req.fields.name
+  // let password = req.fields.password
+  // const repassword = req.fields.repassword
+  // const avatar = req.files.avatar.path.split(path.sep).pop()
   // 校验参数
   try {
     if (!(name.length >= 1 && name.length <= 10)) {
       throw new Error('名字请限制在1-10个字符')
-    } else if (!req.files.avatar.name) {
-      throw new Error('缺少头像')
     } else if (password.length < 6) {
       throw new Error('密码至少6个字符')
     } else if (password !== repassword) {
       throw new Error('两次输入密码不一致')
     }
   } catch (e) {
-    fs.unlink(req.files.avatar.path)
-    return res.render('register', {msg: e.message})
+    res.json({
+      state: 0,
+      msg: e.message
+    })
+    return
   }
   password = sha1(password)
   let obj = {
     name: name,
     password: password,
-    avatar: avatar
   } 
 
   userModel.findDataByUserName(name)
     .then(result => {
       if(result[0]) {
-        fs.unlink(req.files.avatar.path)
-        return res.render('register', {msg: '已存在注册账号'})
+        res.json({
+          state: 0,
+          msg: '已存在注册账号'
+        })
+        return
       } else {
         userModel.writeDataByUser(obj)
           .then(result2 => {
-            delete obj.password
-            req.session.user = obj  //使用session
-            return res.render('index', { title: '注册成功', state: obj.name })
+            if(result2.affectedRows !== 0) {
+              userModel.findDataByUserName(name)
+                .then(result3 => {
+                  delete result3[0].password
+                  res.json({
+                    state: 1,
+                    msg: '',
+                    cont: result3[0]
+                  })
+                  return                  
+                }).catch(err3 => {
+                  res.json({
+                    state: 0,
+                    msg: err3
+                  })
+                  return                  
+                }) 
+            }
           }).catch(err2 => {
-            console.log(err2)
-            return res.render('register', {msg: '注册失败'})
+            res.json({
+              state: 0,
+              msg: err2
+            })
+            return            
           })
       }
+
+      // if(result[0]) {
+      //   fs.unlink(req.files.avatar.path)
+      //   req.flash('error', '已存在注册账号')
+      //   return res.redirect('/users/register')
+      // } else {
+    //   userModel.writeDataByUser(obj)
+    //     .then(result2 => {
+    //       delete obj.password
+    //       req.session.user = obj  //使用session
+    //       return res.redirect('/')
+    //     }).catch(err2 => {
+    //       // console.log(err2)
+    //       // return res.render('register', {msg: '注册失败'})
+    //     })
     }).catch(err => {
-      console.log(err)
-      res.redirect('/register')
+      res.json({
+        state: 0,
+        msg: err
+      })
     })
 
 })

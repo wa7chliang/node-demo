@@ -5,10 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var flash = require('connect-flash')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var signout = require('./routes/signout');
+var upload = require('./routes/upload')
 
 var app = express();
 
@@ -35,15 +37,12 @@ app.use(session({
   saveUninitialized: false  // 新增
 }));
 
-// 处理表单及文件上传的中间件
-app.use(require('express-formidable')({
-  uploadDir: path.join(__dirname, 'public/images'), //上传文件目录 使用方法:req.fields (删除文件:fs.unlink(req.files.avatar.path))
-  keepExtensions: true // 保留后缀
-}))
+app.use(flash())
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/signout', signout);
+app.use('/upload', upload);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,6 +50,8 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
