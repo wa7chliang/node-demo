@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function (req, res, next) {
-    return res.render('register')
+  return res.render('register')
 })
 
 // 注册提交
@@ -19,11 +19,7 @@ router.post('/register', function (req, res, next) {
   const name = req.body.username
   let password = req.body.password
   const repassword = req.body.repassword
-  // res.json({a: 1})
-  // const name = req.fields.name
-  // let password = req.fields.password
-  // const repassword = req.fields.repassword
-  // const avatar = req.files.avatar.path.split(path.sep).pop()
+
   // 校验参数
   try {
     if (!(name.length >= 1 && name.length <= 10)) {
@@ -32,6 +28,56 @@ router.post('/register', function (req, res, next) {
       throw new Error('密码至少6个字符')
     } else if (password !== repassword) {
       throw new Error('两次输入密码不一致')
+    } else {
+
+      password = sha1(password)
+      let obj = {
+        name: name,
+        password: password,
+      } 
+
+      userModel.findDataByUserName(name)
+      .then(result => {
+        if(result[0]) {
+          throw new Error('已存在注册账号')
+        } else {
+          userModel.writeDataByUser(obj)
+            .then(result2 => {
+              if(result2.affectedRows !== 0) {
+                userModel.findDataByUserName(name)
+                  .then(result3 => {
+                    delete result3[0].password
+                    req.session.user = result3[0] //使用session
+                    res.json({
+                      state: 1,
+                      msg: '',
+                      cont: result3[0]
+                    })
+                    return                  
+                  }).catch(err3 => {
+                    res.json({
+                      state: 0,
+                      msg: '添加失败'
+                    })
+                    return
+                  }) 
+              }
+            }).catch(err2 => {
+              res.json({
+                state: 0,
+                msg: '添加失败'
+              })
+              return 
+            })
+        }
+      }).catch(err => {
+        res.json({
+          state: 0,
+          msg: err.message
+        })
+        return  
+      })
+
     }
   } catch (e) {
     res.json({
@@ -40,70 +86,6 @@ router.post('/register', function (req, res, next) {
     })
     return
   }
-  password = sha1(password)
-  let obj = {
-    name: name,
-    password: password,
-  } 
-
-  userModel.findDataByUserName(name)
-    .then(result => {
-      if(result[0]) {
-        res.json({
-          state: 0,
-          msg: '已存在注册账号'
-        })
-        return
-      } else {
-        userModel.writeDataByUser(obj)
-          .then(result2 => {
-            if(result2.affectedRows !== 0) {
-              userModel.findDataByUserName(name)
-                .then(result3 => {
-                  delete result3[0].password
-                  res.json({
-                    state: 1,
-                    msg: '',
-                    cont: result3[0]
-                  })
-                  return                  
-                }).catch(err3 => {
-                  res.json({
-                    state: 0,
-                    msg: err3
-                  })
-                  return                  
-                }) 
-            }
-          }).catch(err2 => {
-            res.json({
-              state: 0,
-              msg: err2
-            })
-            return            
-          })
-      }
-
-      // if(result[0]) {
-      //   fs.unlink(req.files.avatar.path)
-      //   req.flash('error', '已存在注册账号')
-      //   return res.redirect('/users/register')
-      // } else {
-    //   userModel.writeDataByUser(obj)
-    //     .then(result2 => {
-    //       delete obj.password
-    //       req.session.user = obj  //使用session
-    //       return res.redirect('/')
-    //     }).catch(err2 => {
-    //       // console.log(err2)
-    //       // return res.render('register', {msg: '注册失败'})
-    //     })
-    }).catch(err => {
-      res.json({
-        state: 0,
-        msg: err
-      })
-    })
 
 })
 
