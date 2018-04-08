@@ -4,11 +4,21 @@
 <% if (state) { %>
   <div>hello <%= state.username %></div>
   <img src="/images/<%= state.avator %>" alt="">
-  <a href="/signout">登出</a>
+  <a id="signout" href="javascript:void(0);">登出</a>
   <div><a href="/users/personal">个人中心</a></div>
 <% } else { %>
 <div><a href="/users/register">注册</a></div>
 <div><a href="/users/signin">登录</a></div>
 <% } %>
+
+<script>
+  $('#signout').click(function () {
+    $.get('/signout', function (data) {
+      if(data.state == 1) {
+        window.location.href="/"
+      }
+    })
+  })
+</script>
 
 <%- include('footer') %>

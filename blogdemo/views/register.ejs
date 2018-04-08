@@ -24,7 +24,6 @@
       password: $('#password').val(),
       repassword: $('#repassword').val()
       },function (data) {
-        console.log(data)
         if(data.state == 0) {
           $('#msg').html(data.msg)
         } else if(data.state == 1) {

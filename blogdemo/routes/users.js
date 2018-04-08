@@ -96,42 +96,51 @@ router.get('/signin', function (req, res, next) {
 
 // 登录
 router.post('/signin', function (req, res, next) {
-  const name = req.fields.name
-  let password = req.fields.password
+  const name = req.body.username
+  let password = req.body.password
+
   try {
     if (!(name.length >= 1 && name.length <= 10)) {
       throw new Error('名字请限制在1-10个字符')
     } else if (password.length < 6) {
       throw new Error('密码至少6个字符')
+    } else {
+      password = sha1(password)
+      let obj = {
+        name: name,
+        password: password
+      }
+
+      userModel.findDataByUserName(name)
+        .then(result => {
+          if(!result[0]) {
+            throw new Error('账号未注册')
+          } else if(result[0].password !== obj.password) {
+            throw new Error('密码错误')
+          }
+          delete result[0].password
+          req.session.user = result[0]
+          res.json({
+            state: 1,
+            msg: '',
+            cont: result[0]
+          })
+          return
+        }).catch(err => {
+          res.json({
+            state: 0,
+            msg: err.message
+          })
+          return
+        })
     }
   } catch (e) {
-    return res.render('signin', {msg: e.message})
-  }
-  password = sha1(password)
-  let obj = {
-    name: name,
-    password: password
-  }
-  userModel.findDataByUserName(name)
-    .then(result => {
-      let obj0 = result[0]
-      try {
-        if(!obj0) {
-          throw new Error('账号未注册')
-        } else if(obj0.password !== obj.password) {
-          throw new Error('密码错误')
-        }
-      } catch (e) {
-        console.log(e)
-        return res.render('signin', {msg: e.message})
-      }
-      delete obj0.password
-      req.session.user = obj0
-      return res.redirect('/')
-    }).catch(err => {
-      console.log(err)
-      return res.render('signin', {msg: '登录失败'})
+    res.json({
+      state: 0,
+      msg: e.message
     })
+    return
+  }
 })
 
 // 个人中心

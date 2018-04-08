@@ -1,14 +1,28 @@
 <%- include('header') %>
 
 这里是登录
-<div>msg: <%= msg %></div>
-<form method="post" enctype="multipart/form-data">
-  <label>用户名</label>
-  <input placeholder="用户名" type="text" name="name">
-  <label>密码</label>
-  <input placeholder="密码" type="password" name="password">
-  <input type="submit" value="登录">
-</form>
+<div id="msg"></div>
+<label>用户名</label>
+<input placeholder="用户名" type="text" name="name" id="username">
+<label>密码</label>
+<input placeholder="密码" type="password" name="password" id="password">
+<input type="submit" id="submit" value="登录">
 <div><a href="/users/register">注册</a></div>
+
+
+<script>
+  $('#submit').click(function () {
+    $.post('/users/signin', {
+      username: $('#username').val(),
+      password: $('#password').val(),
+      },function (data) {
+        if(data.state == 0) {
+          $('#msg').html(data.msg)
+        } else if(data.state == 1) {
+          window.location.href="/"
+        }
+      })
+  })
+</script>
 
 <%- include('footer') %>
