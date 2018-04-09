@@ -149,5 +149,36 @@ router.get('/personal', function (req, res, next) {
   res.render('personal', {username: objmsg.username, avatar: objmsg.avator, moment: objmsg.moment})
 })
 
+// 修改个人资料
+router.get('/editPersonal', function (req, res, next) {
+  var objmsg = req.session.user
+  res.render('editPersonal', {username: objmsg.username, moment: objmsg.moment})
+})
+
+// 点击提交修改个人资料
+router.post('/editPersonal', function (req, res, next) {
+  let moment = req.body.moment
+  let state = req.session.user
+  userModel.modefieDateByMoment({moment: moment,username: state.username})
+    .then(result => {
+      if(result.affectedRows !== 0) {
+        req.session.user.moment = moment
+        res.json({
+          state: 1,
+          msg: ''
+        })
+        return
+      } else {
+        throw new Error('修改失败')
+      }
+    }).catch(e => {
+      res.json({
+        state: 0,
+        msg: e.message
+      })
+      return
+    })
+})
+
 
 module.exports = router;

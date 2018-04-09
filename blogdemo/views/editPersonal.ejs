@@ -1,0 +1,23 @@
+<%- include('header') %>
+
+<div>修改个人信息</div>
+<div>用户名：<%= username %></div>
+<div id="msg"></div>
+<div>个人简介：<textarea name="moment" id="moment" cols="30" rows="10"><%= moment %></textarea></div>
+<div><button id="submit">确认修改</button></div>
+
+<script>
+  $('#submit').click(function () {
+    $.post('/users/editPersonal', {
+      moment: $('#moment').val()
+      },function (data) {
+        if(data.state == 0) {
+          $('#msg').html(data.msg)
+        } else if(data.state == 1) {
+          window.location.href="/users/personal"
+        }
+      })
+  })
+</script>
+
+<%- include('footer') %>

@@ -28,8 +28,15 @@ let writeDataByUser = ( obj ) => {
   return query(_sql)
 }
 
+// 修改用户个人简介
+let modefieDateByMoment = ( obj ) => {
+  let _sql = `UPDATE user SET moment="${obj.moment}" WHERE username="${obj.username}";`
+  return query(_sql)
+}
+
 module.exports = {
   query,
   findDataByUserName,
-  writeDataByUser
+  writeDataByUser,
+  modefieDateByMoment
 }
