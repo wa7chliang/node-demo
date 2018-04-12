@@ -34,9 +34,16 @@ let modefieDateByMoment = ( obj ) => {
   return query(_sql)
 }
 
+// 修改用户个人头像
+let modifieDataByAvatar = ( obj ) => {
+  let _sql = `UPDATE user SET avator="${obj.avatar}" WHERE username="${obj.username}";`
+  return query(_sql)
+}
+
 module.exports = {
   query,
   findDataByUserName,
   writeDataByUser,
-  modefieDateByMoment
+  modefieDateByMoment,
+  modifieDataByAvatar
 }

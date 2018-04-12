@@ -1,6 +1,8 @@
 var multer  = require('multer')
 var express = require('express');
 var router = express.Router();
+var userModel = require('../lib/mysqlc')
+var fs = require('fs')
 
 // 通过 filename 属性定制
 var storage = multer.diskStorage({
@@ -17,8 +19,34 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 // 单图上传
-router.post('/', upload.single('logo'), function(req, res, next){
-    var file = req.file;
+router.post('/', upload.single('avatar'), function(req, res, next){
+	let avatarname = req.session.user.avator
+	var fileAddress = './public/images/' + avatarname
+	let obj = {
+		username: req.session.user.username,
+		avatar: req.file.filename
+	}
+	userModel.modifieDataByAvatar(obj)
+		.then(result => {
+			if(result.affectedRows !== 0) {
+				if(avatarname !== 'upload_7eb0f17c485156efad980e49259fd408.jpg') {
+					fs.unlink(fileAddress)
+				}
+				req.session.user.avator = req.file.filename
+				res.json({
+					state: 1,
+					msg: '修改成功'
+				})
+				return
+			} else {
+				throw new Error('修改失败')
+			}
+		}).catch(e => {
+			res.json({
+				state: 0,
+				msg: e.message
+			})
+		})
 });
 
 module.exports = router;
