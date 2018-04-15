@@ -1,0 +1,17 @@
+<%- include('header') %>
+
+<style>
+  span {
+    margin-right: 20px;
+  }
+</style>
+
+<div><%= err %></div>
+<h3><%= content.title %></h3>
+<span>作者:<%= content.username %></span>
+<span>浏览次数:<%= content.pv %></span>
+<span>发表事件:<%= content.moment %></span>
+
+<div><%= content.content %></div>
+
+<%- include('footer') %>

@@ -10,10 +10,35 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2018-04-12 22:48:57
+Date: 2018-04-15 19:49:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for posts
+-- ----------------------------
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `title` text NOT NULL,
+  `content` text NOT NULL,
+  `moment` varchar(100) NOT NULL,
+  `comments` varchar(200) NOT NULL DEFAULT '0',
+  `pv` varchar(40) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of posts
+-- ----------------------------
+INSERT INTO `posts` VALUES ('5', 'admin', 'asdasd', 'asdasdasd', '2018-4-15 18:57:16', '0', '1');
+INSERT INTO `posts` VALUES ('6', 'admin', 'asdasd', 'asdasdasdasd', '2018-4-15 18:57:30', '0', '1');
+INSERT INTO `posts` VALUES ('7', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:58:35', '0', '0');
+INSERT INTO `posts` VALUES ('8', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:59:01', '0', '0');
+INSERT INTO `posts` VALUES ('9', 'admin', 'asdasd', 'asdasdasdas', '2018-4-15 18:59:21', '0', '0');
+INSERT INTO `posts` VALUES ('10', 'admin', 'sadsad', 'sadasdasdsa', '2018-4-15 19:27:30', '0', '7');
 
 -- ----------------------------
 -- Table structure for user

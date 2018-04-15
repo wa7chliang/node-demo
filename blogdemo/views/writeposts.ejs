@@ -1,0 +1,29 @@
+<%- include('header') %>
+
+<div id="msg"></div>
+<div>用户名: <%= state.username %></div>
+<div>标题：<input type="text" name="title" id="title"></div>
+<div>内容: <textarea id="content" name="content" cols="100" rows="20"></textarea></div>
+
+<button id="submit">发表文章</button>
+
+<div><a href="/">返回首页</a></div>
+
+<script>
+  $('#submit').click(function () {
+    var obj = {
+      title: $('#title').val(),
+      content: $('#content').val()
+    }
+    $.post('/posts/writeposts', obj, function (data) {
+      if (data.state == 0) {
+        $('#msg').text(data.msg)
+      } else {
+        window.location.href="/posts/article/" + data.content.insertId
+      }
+    })
+  })
+</script>
+
+
+<%- include('footer') %>

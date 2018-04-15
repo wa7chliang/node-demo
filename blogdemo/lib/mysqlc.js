@@ -40,10 +40,31 @@ let modifieDataByAvatar = ( obj ) => {
   return query(_sql)
 }
 
+// 发表文章
+let writeDataByposts = ( obj ) => {
+  let _sql = `INSERT INTO posts(username,title,content,moment) VALUES("${obj.username}","${obj.title}","${obj.content}","${obj.moment}");`
+  return query(_sql)
+}
+
+// 通过id查找文章
+let findPostsById = ( obj ) => {
+  let _sql = `select * from posts where id="${obj.id}";`
+  return query(_sql)
+}
+
+// 添加浏览次数
+let addDataByPv = ( obj ) => {
+  let _sql = `UPDATE posts SET pv="${obj.pv}" WHERE id="${obj.id}";`
+  return query(_sql)
+}
+
 module.exports = {
   query,
   findDataByUserName,
   writeDataByUser,
   modefieDateByMoment,
-  modifieDataByAvatar
+  modifieDataByAvatar,
+  writeDataByposts,
+  findPostsById,
+  addDataByPv
 }
