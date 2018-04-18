@@ -58,6 +58,19 @@ let addDataByPv = ( obj ) => {
   return query(_sql)
 }
 
+// 查询分页文章
+let findDataByArticle = ( obj ) => {
+  let _sql = `select * FROM posts ORDER BY moment DESC limit ${(obj.page-1)*10},10;`
+  return query(_sql)
+}
+
+// 查询文章列表总数
+let findCountByArticle = () => {
+  let _sql = `select count(*) AS listCount from posts` //查询总数并命名为listCount
+  return query(_sql)
+}
+
+
 module.exports = {
   query,
   findDataByUserName,
@@ -66,5 +79,7 @@ module.exports = {
   modifieDataByAvatar,
   writeDataByposts,
   findPostsById,
-  addDataByPv
+  addDataByPv,
+  findDataByArticle,
+  findCountByArticle
 }

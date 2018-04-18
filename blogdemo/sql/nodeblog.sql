@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : demo1
-Source Server Version : 50711
+Source Server         : demo
+Source Server Version : 50720
 Source Host           : localhost:3306
 Source Database       : nodeblog
 
 Target Server Type    : MYSQL
-Target Server Version : 50711
+Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-04-15 19:49:12
+Date: 2018-04-18 15:34:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `posts` (
   `comments` varchar(200) NOT NULL DEFAULT '0',
   `pv` varchar(40) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of posts
@@ -39,6 +39,8 @@ INSERT INTO `posts` VALUES ('7', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:5
 INSERT INTO `posts` VALUES ('8', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:59:01', '0', '0');
 INSERT INTO `posts` VALUES ('9', 'admin', 'asdasd', 'asdasdasdas', '2018-4-15 18:59:21', '0', '0');
 INSERT INTO `posts` VALUES ('10', 'admin', 'sadsad', 'sadasdasdsa', '2018-4-15 19:27:30', '0', '7');
+INSERT INTO `posts` VALUES ('12', 'admin', 'kdfjlgdfjlkg', 'lskdfjlkdsjflksdjflksdjlfkxdvnxckjvnskjndkdfjvsd', '2018-4-18 10:17:22', '0', '1');
+INSERT INTO `posts` VALUES ('13', 'admin', '阿贾克斯地方哈桑的话看', '阿斯科利的家哈看似简单哈萨克决定哈看似简单很快撒娇都卡死的', '2018-4-18 10:52:22', '0', '1');
 
 -- ----------------------------
 -- Table structure for user
