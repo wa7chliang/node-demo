@@ -70,6 +70,12 @@ let findCountByArticle = () => {
   return query(_sql)
 }
 
+// 通过username查询分页文章
+let findUsernameByArticle = ( obj ) => {
+  let _sql = `select * FROM posts  WHERE username="${obj.username}" ORDER BY moment DESC limit ${(obj.page-1)*10},10;`
+  return query(_sql)
+}
+
 
 module.exports = {
   query,
@@ -81,5 +87,6 @@ module.exports = {
   findPostsById,
   addDataByPv,
   findDataByArticle,
-  findCountByArticle
+  findCountByArticle,
+  findUsernameByArticle
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-04-18 15:34:36
+Date: 2018-04-20 16:01:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `posts` (
   `comments` varchar(200) NOT NULL DEFAULT '0',
   `pv` varchar(40) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of posts
@@ -41,6 +41,9 @@ INSERT INTO `posts` VALUES ('9', 'admin', 'asdasd', 'asdasdasdas', '2018-4-15 18
 INSERT INTO `posts` VALUES ('10', 'admin', 'sadsad', 'sadasdasdsa', '2018-4-15 19:27:30', '0', '7');
 INSERT INTO `posts` VALUES ('12', 'admin', 'kdfjlgdfjlkg', 'lskdfjlkdsjflksdjflksdjlfkxdvnxckjvnskjndkdfjvsd', '2018-4-18 10:17:22', '0', '1');
 INSERT INTO `posts` VALUES ('13', 'admin', '阿贾克斯地方哈桑的话看', '阿斯科利的家哈看似简单哈萨克决定哈看似简单很快撒娇都卡死的', '2018-4-18 10:52:22', '0', '1');
+INSERT INTO `posts` VALUES ('14', 'admin', 'ask接电话ask倒萨科技点', '阿奎拉加德卢萨卡的空间撒获得刻录机啊时刀口浪尖萨获得刻录机啊时的刻录机啊时刀口浪尖撒谎的卡上', '2018-4-20 15:54:29', '0', '1');
+INSERT INTO `posts` VALUES ('15', 'admin', '看见啊但是疯狂', '阿贾克斯的话卡死接电话ask接电话萨科拉加德哈萨科拉加德号啊深刻理解大司空看客家话萨科决定好卡时的', '2018-4-20 15:54:43', '0', '1');
+INSERT INTO `posts` VALUES ('16', 'admin', 'uiyhtiwaeufhklsadj发生的', '大家看是否粮库收购分iuweghfliuwe共花费了空间撒的步伐加快落实大口径三度空间科技大厦', '2018-4-20 15:54:55', '0', '1');
 
 -- ----------------------------
 -- Table structure for user
