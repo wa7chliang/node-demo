@@ -76,6 +76,12 @@ let findUsernameByArticle = ( obj ) => {
   return query(_sql)
 }
 
+// 通过username查询分页列表总数
+let findCountByAricleWhereUsername = ( obj ) => {
+  let _sql = `select count(*) AS listCount from posts WHERE username="${obj.username}";` //查询总数并命名为listCount  
+  return query(_sql)
+}
+
 
 module.exports = {
   query,
@@ -88,5 +94,6 @@ module.exports = {
   addDataByPv,
   findDataByArticle,
   findCountByArticle,
-  findUsernameByArticle
+  findUsernameByArticle,
+  findCountByAricleWhereUsername
 }

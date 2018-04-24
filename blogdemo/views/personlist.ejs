@@ -1,0 +1,23 @@
+<%- include('header') %>
+
+<div>这里是个人列表</div>
+<div><%= username %></div>
+
+<% if(list) { %>
+  <ul>
+    <% list.forEach(function(item) { %>
+      <li>
+        <div>标题:<%= item.title %></div>
+        <div><%= item.content %></div>
+        <div>作者:<%= item.username %></div>
+        <div>修改时间:<%= item.moment %></div>
+      </li>
+    <% }); %>
+  </ul>
+  <div>总数:<%= count %></div>
+  <% for(var i = 0; i<count/10; i++) { %>
+    <a href="/personlist/<%= username %>?page=<%= (i+1) %>"><%= (i+1) %></a>
+  <% } %>
+<% } %>
+
+<%- include('footer') %>
