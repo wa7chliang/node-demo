@@ -11,11 +11,24 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 04/24/2018 23:19:49 PM
+ Date: 04/26/2018 23:01:28 PM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `comment`
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `moment` varchar(40) NOT NULL,
+  `postid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `posts`
@@ -36,7 +49,7 @@ CREATE TABLE `posts` (
 --  Records of `posts`
 -- ----------------------------
 BEGIN;
-INSERT INTO `posts` VALUES ('5', 'admin', 'asdasd', 'asdasdasd', '2018-4-15 18:57:16', '0', '1'), ('6', 'admin', 'asdasd', 'asdasdasdasd', '2018-4-15 18:57:30', '0', '1'), ('7', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:58:35', '0', '0'), ('8', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:59:01', '0', '0'), ('9', 'admin', 'asdasd', 'asdasdasdas', '2018-4-15 18:59:21', '0', '0'), ('10', 'admin', 'sadsad', 'sadasdasdsa', '2018-4-15 19:27:30', '0', '7'), ('12', 'admin', 'kdfjlgdfjlkg', 'lskdfjlkdsjflksdjflksdjlfkxdvnxckjvnskjndkdfjvsd', '2018-4-18 10:17:22', '0', '1'), ('13', 'admin', '阿贾克斯地方哈桑的话看', '阿斯科利的家哈看似简单哈萨克决定哈看似简单很快撒娇都卡死的', '2018-4-18 10:52:22', '0', '1'), ('14', 'admin', 'ask接电话ask倒萨科技点', '阿奎拉加德卢萨卡的空间撒获得刻录机啊时刀口浪尖萨获得刻录机啊时的刻录机啊时刀口浪尖撒谎的卡上', '2018-4-20 15:54:29', '0', '1'), ('15', 'admin', '看见啊但是疯狂', '阿贾克斯的话卡死接电话ask接电话萨科拉加德哈萨科拉加德号啊深刻理解大司空看客家话萨科决定好卡时的', '2018-4-20 15:54:43', '0', '1'), ('16', 'admin', 'uiyhtiwaeufhklsadj发生的', '大家看是否粮库收购分iuweghfliuwe共花费了空间撒的步伐加快落实大口径三度空间科技大厦', '2018-4-20 15:54:55', '0', '1'), ('17', 'admin2', '阿升级换代sad 好', '阿就是快点好阿说的话借口阿说的话看见啊都好看', '2018-4-24 23:07:48', '0', '1');
+INSERT INTO `posts` VALUES ('5', 'admin', 'asdasd', 'asdasdasd', '2018-4-15 18:57:16', '0', '1'), ('6', 'admin', 'asdasd', 'asdasdasdasd', '2018-4-15 18:57:30', '0', '1'), ('7', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:58:35', '0', '0'), ('8', 'admin', 'asdsa', 'dasdasdasd', '2018-4-15 18:59:01', '0', '0'), ('9', 'admin', 'asdasd', 'asdasdasdas', '2018-4-15 18:59:21', '0', '0'), ('10', 'admin', 'sadsad', 'sadasdasdsa', '2018-4-15 19:27:30', '0', '8'), ('12', 'admin', 'kdfjlgdfjlkg', 'lskdfjlkdsjflksdjflksdjlfkxdvnxckjvnskjndkdfjvsd', '2018-4-18 10:17:22', '0', '2'), ('13', 'admin', '阿贾克斯地方哈桑的话看', '阿斯科利的家哈看似简单哈萨克决定哈看似简单很快撒娇都卡死的', '2018-4-18 10:52:22', '0', '2'), ('14', 'admin', 'ask接电话ask倒萨科技点', '阿奎拉加德卢萨卡的空间撒获得刻录机啊时刀口浪尖萨获得刻录机啊时的刻录机啊时刀口浪尖撒谎的卡上', '2018-4-20 15:54:29', '0', '3'), ('15', 'admin', '看见啊但是疯狂', '阿贾克斯的话卡死接电话ask接电话萨科拉加德哈萨科拉加德号啊深刻理解大司空看客家话萨科决定好卡时的', '2018-4-20 15:54:43', '0', '2'), ('16', 'admin', 'uiyhtiwaeufhklsadj发生的', '大家看是否粮库收购分iuweghfliuwe共花费了空间撒的步伐加快落实大口径三度空间科技大厦', '2018-4-20 15:54:55', '0', '9'), ('17', 'admin2', '阿升级换代sad 好', '阿就是快点好阿说的话借口阿说的话看见啊都好看', '2018-4-24 23:07:48', '0', '2');
 COMMIT;
 
 -- ----------------------------

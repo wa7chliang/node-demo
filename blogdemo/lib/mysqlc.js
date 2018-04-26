@@ -82,6 +82,12 @@ let findCountByAricleWhereUsername = ( obj ) => {
   return query(_sql)
 }
 
+// 提交评论
+let addComment = ( obj ) => {
+  let _sql = `INSERT INTO comment(username,postid,content,moment) VALUES("${obj.username}","${obj.postid}","${obj.content}","${obj.moment}");`
+  return query(_sql)
+}
+
 
 module.exports = {
   query,
@@ -95,5 +101,6 @@ module.exports = {
   findDataByArticle,
   findCountByArticle,
   findUsernameByArticle,
-  findCountByAricleWhereUsername
+  findCountByAricleWhereUsername,
+  addComment
 }

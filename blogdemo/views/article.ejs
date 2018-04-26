@@ -14,6 +14,20 @@
 
 <div><%= content.content %></div>
 <br>
+<div>发布评论：</div>
+<div><textarea name="comment" id="comment" cols="30" rows="10" placeholder="评论"></textarea></div>
+<div><button id="submit">评论</button></div>
 <a href="/">返回首页</a>
+
+<script>
+  $('#submit').click(function () {
+    $.post('/comment', {
+      content: $('#comment').val(),
+      postid: location.pathname.substring(location.pathname.lastIndexOf('/')+1)
+    }, function (data) {
+      console.log(data)
+    })
+  })
+</script>
 
 <%- include('footer') %>

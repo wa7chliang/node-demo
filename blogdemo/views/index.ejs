@@ -17,7 +17,7 @@
   <ul>
     <% list.forEach(function(item) { %>
       <li>
-        <div>标题:<%= item.title %></div>
+        <div>标题:<a href="/posts/article/<%= item.id %>"><%= item.title %></a></div>
         <div><%= item.content %></div>
         <div>作者:<a href="/personlist/<%= item.username %>"><%= item.username %></a></div>
         <div>修改时间:<%= item.moment %></div>
