@@ -88,6 +88,17 @@ let addComment = ( obj ) => {
   return query(_sql)
 }
 
+// 搜索文章评论
+let findCommentByPostid = ( obj ) => {
+  let _sql = `select * FROM comment WHERE postid=${obj.postid} ORDER BY moment DESC limit ${(obj.page-1)*10},10;`
+  return query(_sql)  
+}
+
+// 添加评论数并更新修改时间
+let UpdateCommentAndMoment = ( obj ) => {
+  let _sql = `UPDATE posts SET comments="${obj.comments}",moment="${obj.moment}" WHERE id="${obj.postid}";`
+  return query(_sql)      
+}
 
 module.exports = {
   query,
@@ -102,5 +113,7 @@ module.exports = {
   findCountByArticle,
   findUsernameByArticle,
   findCountByAricleWhereUsername,
-  addComment
+  addComment,
+  findCommentByPostid,
+  UpdateCommentAndMoment
 }

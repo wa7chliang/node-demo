@@ -66,17 +66,25 @@ router.get('/article/:id', function (req, res, next) {
   obj.id = req.params.id
   var obj2 = {}
   obj2.id = req.params.id
+  let page = req.query.page || 1
+  let list = []
   userModel.findPostsById(obj)
     .then(result => {
       if(result[0]) {
         obj2.pv = parseInt(result[0].pv) + 1
         userModel.addDataByPv(obj2)
-        return res.render('article', {content: result[0], err: ''})
+        userModel.findCommentByPostid({postid: req.params.id, page, page})
+          .then(result2 => {
+            list = result2
+            return res.render('article', {content: result[0], err: '', list: list})         
+          }).catch(e2 => {
+            return res.render('article', {content: '', err: e.message, list: list})            
+          })
       } else {
         throw new Error('404')
       }
     }).catch(e => {
-      return res.render('article', {content: '', err: e.message})      
+      return res.render('article', {content: '', err: e.message, list: list})      
     })
 })
 

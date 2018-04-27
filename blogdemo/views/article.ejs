@@ -14,18 +14,36 @@
 
 <div><%= content.content %></div>
 <br>
+<div>评论列表</div>
+<% if (list) { %>
+  <ul>
+  <% list.forEach(function (item) { %>
+    <li>
+      <div><%= item.content %></div>
+      <div>评论人：<%= item.username %></div>
+      <div>评论时间：<%= item.moment %></div>
+    </li>
+  <% }) %>
+  </ul>
+<% } %>
+
+<br>
 <div>发布评论：</div>
 <div><textarea name="comment" id="comment" cols="30" rows="10" placeholder="评论"></textarea></div>
 <div><button id="submit">评论</button></div>
 <a href="/">返回首页</a>
 
 <script>
+  let comments = <%= content.comments %>
   $('#submit').click(function () {
     $.post('/comment', {
       content: $('#comment').val(),
-      postid: location.pathname.substring(location.pathname.lastIndexOf('/')+1)
+      postid: location.pathname.substring(location.pathname.lastIndexOf('/')+1),
+      comments: ++comments
     }, function (data) {
-      console.log(data)
+      if (data.state == 1) {
+        history.go(0)
+      }
     })
   })
 </script>

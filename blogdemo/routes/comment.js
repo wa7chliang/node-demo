@@ -8,7 +8,8 @@ router.post('/', function (req, res, next) {
     content: req.body.content,
     username: req.session.user.username,
     postid: req.body.postid,
-    moment: d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + (d.getMinutes()<10?'0'+d.getMinutes():d.getMinutes()) + ':' + (d.getSeconds()<10?'0'+d.getSeconds():d.getSeconds())    
+    moment: d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + (d.getMinutes()<10?'0'+d.getMinutes():d.getMinutes()) + ':' + (d.getSeconds()<10?'0'+d.getSeconds():d.getSeconds()),  
+    comments: req.body.comments
   }
   try {
     if(obj.length == 0) {
@@ -17,6 +18,7 @@ router.post('/', function (req, res, next) {
       userModel.addComment(obj)
       .then(result => {
         if(result.affectedRows !== 0) {
+          userModel.UpdateCommentAndMoment(obj)
           res.json({
             state: 1,
             msg: '',
