@@ -25,6 +25,10 @@
     </li>
   <% }) %>
   </ul>
+  <div>总数:<%= content.comments %></div>
+  <% for(var i = 0; i<content.comments/10; i++) { %>
+    <a href="/posts/article/<%= content.id %>?page=<%= (i+1) %>"><%= (i+1) %></a>
+  <% } %>  
 <% } %>
 
 <br>

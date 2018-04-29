@@ -61,6 +61,7 @@ router.post('/writeposts', function (req, res, next) {
 
 })
 
+// 查看文章详情
 router.get('/article/:id', function (req, res, next) {
   let obj = {}
   obj.id = req.params.id
