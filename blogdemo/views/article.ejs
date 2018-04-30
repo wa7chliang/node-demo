@@ -14,6 +14,10 @@
 
 <div><%= content.content %></div>
 <br>
+<% if (isAuthor) { %>
+  <a href="/posts/editposts?id=<%= content.id %>">修改文章</a>
+<% } %>
+<br>
 <div>评论列表</div>
 <% if (list) { %>
   <ul>

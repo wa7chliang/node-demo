@@ -100,6 +100,12 @@ let UpdateCommentAndMoment = ( obj ) => {
   return query(_sql)      
 }
 
+// 修改文章
+let UpdateArticle = ( obj ) => {
+  let _sql = `UPDATE posts SET title="${obj.title}",content="${obj.content}",moment="${obj.moment}" WHERE id="${obj.postid}";`  
+  return query(_sql)
+}
+
 module.exports = {
   query,
   findDataByUserName,
@@ -115,5 +121,6 @@ module.exports = {
   findCountByAricleWhereUsername,
   addComment,
   findCommentByPostid,
-  UpdateCommentAndMoment
+  UpdateCommentAndMoment,
+  UpdateArticle
 }
