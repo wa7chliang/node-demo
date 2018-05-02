@@ -106,6 +106,18 @@ let UpdateArticle = ( obj ) => {
   return query(_sql)
 }
 
+// 删除文章
+let DeleteArticleById = ( obj ) => {
+  let _sql = `delete from posts where id="${obj.postid}";`
+  return query(_sql)  
+}
+
+// 删除评论
+let DeleteCommentById = ( obj ) => {
+  let _sql = `delete from comment where postid="${obj.postid}";`
+  return query(_sql)    
+}
+
 module.exports = {
   query,
   findDataByUserName,
@@ -122,5 +134,7 @@ module.exports = {
   addComment,
   findCommentByPostid,
   UpdateCommentAndMoment,
-  UpdateArticle
+  UpdateArticle,
+  DeleteArticleById,
+  DeleteCommentById
 }

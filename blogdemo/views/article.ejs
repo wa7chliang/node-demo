@@ -16,6 +16,7 @@
 <br>
 <% if (isAuthor) { %>
   <a href="/posts/editposts?id=<%= content.id %>">修改文章</a>
+  <button id="deleteBtn">删除文章</button>
 <% } %>
 <br>
 <div>评论列表</div>
@@ -51,6 +52,15 @@
     }, function (data) {
       if (data.state == 1) {
         history.go(0)
+      }
+    })
+  })
+  $('#deleteBtn').click(function () {
+    $.post('/posts/deleteposts', {
+      postid: location.pathname.substring(location.pathname.lastIndexOf('/')+1)      
+    }, function (data) {
+      if (data.state == 1) {
+        window.location.href="/"        
       }
     })
   })

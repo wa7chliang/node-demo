@@ -113,6 +113,31 @@ router.post('/editposts', function (req, res, next) {
     })
 })
 
+// 删除文章
+router.post('/deleteposts', function (req, res, next) {
+  let obj = {
+    postid: req.body.postid
+  }
+  userModel.DeleteArticleById(obj)
+    .then(result => {
+      if(result.affectedRows !== 0) {      
+        userModel.DeleteCommentById(obj)
+        res.json({
+          state: 1,
+          msg: '',
+          content: result
+        })
+        return
+      }
+    }).catch(e => {
+      res.json({
+        state: 0,
+        msg: e.message
+      })
+      return
+    })
+})
+
 // 查看文章详情
 router.get('/article/:id', function (req, res, next) {
   let obj = {}
