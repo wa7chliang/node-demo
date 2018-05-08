@@ -1,9 +1,43 @@
 <%- include('header') %>
 
+<style>
+#monthList {
+  width: 350px;
+  overflow: hidden;
+}
+#monthList li {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  list-style: none;
+  float: left;
+  position: relative;
+}
+#monthList li span {
+  position: relative;
+  z-index: 2;
+}
+#monthList li p {
+  position: absolute;
+  z-index: 1;
+  color: red;
+  margin: 0;
+  top: 50%;
+  margin-top: -25px;
+}
+</style>
+
 <div>头像: <img src="/images/<%= avatar %>" alt=""></div>
+<button id="checkTime">签到</button>
+<div>
+  <h3 id="month"></h3>
+  <ul id="monthList"></ul>
+</div>
+
 <div id="msg"></div>
 <div>修改头像:</div><form><input type="file" id="avatar" name="avatar"></form>
-<button>确认修改</button>
+<button id="uploadBtn">确认修改</button>
 <div>用户名: <%= username %></div>
 <div>个人简介: <%= moment %></div>
 
@@ -14,7 +48,88 @@
 <a href="/">回到首页</a>
 
 <script>
-$('button').click(function(){
+var isMonth
+var m = new Date().getMonth()+1 //得到几月
+$('#month').text(m + '月')
+var y = new Date().getFullYear()
+var w = new Date(y + '/' + m + '/05').getDay() //得到星期几
+
+
+function monthBox(y, m, readyDay,day) {
+  this.m = m
+  this.y = y
+  this.readyDay = readyDay || []
+  this.day = day || 31
+}
+
+monthBox.prototype.getLi = function(el) {
+  var w = new Date(this.y + '/' + this.m + '/01').getDay()
+  var str = ''
+  var week = ['日','一','二','三','四','五','六']
+  for(var k = 0;k <7; k++) {
+    str += '<li>'+ week[k] + '</li>'
+  }
+  switch(this.m) {
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+      this.day = 30
+      break;
+    case 2 :
+      if(((this.y % 4) == 0 && (this.y % 100)!=0) || (this.y % 400 == 0)) {
+        this.day = 29
+      } else {
+        this.day = 28
+      }
+      break;
+  }
+  if(w !== 0) {
+    for(var j = 0; j<w; j++) {
+      str += '<li></li>'      
+    }
+  }
+  for(var i = 0;i<this.day; i++) {
+    if(this.readyDay.indexOf((i+1)) >= 0) {
+      str+= '<li><span>'+ (i+1) +'</span><p>已签到</p></li>'    
+    } else {
+      str+= '<li><span>'+ (i+1) +'</span></li>'      
+    }
+  }
+  $(el).html(str)
+}
+
+let monthArr = []
+$.get('/users/checkTime', function (data) {
+  if(data.state == 1) {
+    data.list.checkM == (y + '-' + m)?isMonth = true:isMonth = false
+    if (data.list.checkD !== null) {
+      monthArr = JSON.parse(data.list.checkD)
+    }
+  }
+  var mb = new monthBox(y,m,monthArr)
+  mb.getLi('#monthList')
+})
+
+$('#checkTime').click(function () {
+  if(isMonth) {
+    if(monthArr.indexOf(new Date().getDate()) > 0) {
+      alert('你已经签到了')
+      return
+    }
+  }
+  $.post('/users/checkTime', {
+    checkD: JSON.stringify(monthArr),
+    checkM: y + '-' + m,
+    isMonth: isMonth
+  }, function (data) {
+    if (data.state == 1) {
+      history.go(0)
+    }
+  })
+})
+
+$('#uploadBtn').click(function(){
   var files = $('#avatar').prop('files');
   var data = new FormData();
   if(!files[0]) {
@@ -38,6 +153,7 @@ $('button').click(function(){
     }
   })
 });
+
 </script>
 
 <%- include('footer') %>

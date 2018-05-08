@@ -180,5 +180,76 @@ router.post('/editPersonal', function (req, res, next) {
     })
 })
 
+// 得到签到表
+router.get('/checkTime', function (req, res, next) {
+  let users = req.session.user
+  let obj = {
+    id: users.id
+  }
+  userModel.FindIdByCheckTime(obj)
+  .then(result => {   
+    if(result[0]) {
+      res.json({
+        state: 1,
+        list: result[0]
+      })
+    } else {
+      userModel.CreateCheckTimeById(obj)
+        .then(result2 => {
+          if(result2.affectedRows !== 0) {
+            res.json({
+              state: 2,
+              content: result2
+            })
+          } else {
+            throw new Error('创建失败')
+          }          
+        }).catch(e2 => {
+          res.json({
+            state: 0,
+            msg: e2.message
+          })
+        })
+    }
+  }).catch(e => {
+    console.log(e)
+  })
+})
+
+// 点击签到
+router.post('/checkTime', function (req, res, next) {
+  let users = req.session.user
+  let isMonth = req.body.isMonth
+  let obj = {
+    id: users.id,
+    checkM: req.body.checkM,
+    checkD: JSON.parse(req.body.checkD) || []
+  }
+  if (isMonth) {
+    obj.checkD.push(new Date().getDate())    
+    obj.checkD = JSON.stringify(obj.checkD)    
+  } else {
+    obj.checkD = []
+    obj.checkD.push(new Date().getDate())
+    obj.checkD = JSON.stringify(obj.checkD)
+  }
+  userModel.UpdateCheckTimeById(obj)
+    .then(result => {
+      if(result.affectedRows !== 0) {
+        res.json({
+          state: 1,
+          content: result
+        })
+      } else {
+        throw new Error('插入失败')
+      }
+    }).catch(e => {
+      res.json({
+        state: 0,
+        msg: e.message
+      })
+    })
+})
+
 
 module.exports = router;

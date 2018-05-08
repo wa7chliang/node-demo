@@ -11,11 +11,29 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 05/02/2018 11:14:43 AM
+ Date: 05/08/2018 11:05:17 AM
 */
 
 SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `checkTime`
+-- ----------------------------
+DROP TABLE IF EXISTS `checkTime`;
+CREATE TABLE `checkTime` (
+  `id` int(11) NOT NULL,
+  `checkM` varchar(100) DEFAULT NULL,
+  `checkD` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `checkTime`
+-- ----------------------------
+BEGIN;
+INSERT INTO `checkTime` VALUES ('1', '2018-5', '[1,2,8]'), ('11', '2018-5', '[8]');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `comment`
@@ -28,7 +46,7 @@ CREATE TABLE `comment` (
   `moment` varchar(40) NOT NULL,
   `postid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `comment`
@@ -50,7 +68,7 @@ CREATE TABLE `posts` (
   `comments` varchar(200) NOT NULL DEFAULT '0',
   `pv` varchar(40) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `posts`

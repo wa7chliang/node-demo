@@ -115,7 +115,25 @@ let DeleteArticleById = ( obj ) => {
 // 删除评论
 let DeleteCommentById = ( obj ) => {
   let _sql = `delete from comment where postid="${obj.postid}";`
-  return query(_sql)    
+  return query(_sql)
+}
+
+// 查询签到表中的id
+let FindIdByCheckTime = ( obj ) => {
+  let _sql = `select * FROM checkTime WHERE id="${obj.id}";`
+  return query(_sql)
+}
+
+// 新建签到表内容
+let CreateCheckTimeById = ( obj ) => {
+  let _sql = `INSERT INTO checkTime(id) VALUES("${obj.id}");`
+  return query(_sql)
+}
+
+// 改变签到表内容
+let UpdateCheckTimeById = ( obj ) => {
+  let _sql = `UPDATE checkTime SET checkM="${obj.checkM}",checkD="${obj.checkD}" WHERE id="${obj.id}";`    
+  return query(_sql)  
 }
 
 module.exports = {
@@ -136,5 +154,8 @@ module.exports = {
   UpdateCommentAndMoment,
   UpdateArticle,
   DeleteArticleById,
-  DeleteCommentById
+  DeleteCommentById,
+  FindIdByCheckTime,
+  CreateCheckTimeById,
+  UpdateCheckTimeById
 }
