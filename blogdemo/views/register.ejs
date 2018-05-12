@@ -1,5 +1,11 @@
 <%- include('header') %>
 
+<style>
+  #codeImg {
+    cursor: pointer;
+  }
+</style>
+
 这里是注册
   <div id="msg"></div>
   <label>用户名</label>
@@ -8,13 +14,10 @@
   <input placeholder="密码" type="password" name="password" id="password">
   <label>重复密码</label>
   <input placeholder="重复密码" type="password" name="repassword" id="repassword">
+  <label>验证码：</label>
+  <input placeholder="验证码" type="text" name="code" id="code">
+  <img id="codeImg" src = '/captcha' alt="验证码" onclick="javascript: this.src='/captcha?code='+ Math.random()">
   <input type="submit" id="submit" value="注册">
-
-<!--<form action="/upload" method="post" enctype="multipart/form-data">
-    <h2>单图上传</h2>
-    <input type="file" name="logo">
-    <input type="submit" value="提交">
-</form>-->
 
 
 <script>
@@ -22,7 +25,8 @@
     $.post('/users/register', {
       username: $('#username').val(),
       password: $('#password').val(),
-      repassword: $('#repassword').val()
+      repassword: $('#repassword').val(),
+      code: $('#code').val()      
       },function (data) {
         if(data.state == 0) {
           $('#msg').html(data.msg)

@@ -19,7 +19,8 @@ router.post('/register', function (req, res, next) {
   const name = req.body.username
   let password = req.body.password
   const repassword = req.body.repassword
-
+  let code = req.body.code.toUpperCase()
+  let captcha = req.session.captcha
   // 校验参数
   try {
     if (!(name.length >= 1 && name.length <= 10)) {
@@ -28,6 +29,8 @@ router.post('/register', function (req, res, next) {
       throw new Error('密码至少6个字符')
     } else if (password !== repassword) {
       throw new Error('两次输入密码不一致')
+    } else if (code !== captcha) {
+      throw new Error('验证码错误')
     } else {
 
       password = sha1(password)
@@ -98,12 +101,16 @@ router.get('/signin', function (req, res, next) {
 router.post('/signin', function (req, res, next) {
   const name = req.body.username
   let password = req.body.password
+  let code = req.body.code.toUpperCase()
+  let captcha = req.session.captcha
 
   try {
     if (!(name.length >= 1 && name.length <= 10)) {
       throw new Error('名字请限制在1-10个字符')
     } else if (password.length < 6) {
       throw new Error('密码至少6个字符')
+    } else if (code !== captcha) {
+      throw new Error('验证码错误')
     } else {
       password = sha1(password)
       let obj = {

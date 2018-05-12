@@ -1,5 +1,11 @@
 <%- include('header') %>
 
+<style>
+  #codeImg {
+    cursor: pointer;
+  }
+</style>
+
 这里是登录
 <div id="msg"></div>
 <label>用户名</label>
@@ -7,6 +13,9 @@
 <label>密码</label>
 <input placeholder="密码" type="password" name="password" id="password">
 <input type="submit" id="submit" value="登录">
+<label>验证码：</label>
+<input placeholder="验证码" type="text" name="code" id="code">
+<img id="codeImg" src = '/captcha' alt="验证码" onclick="javascript: this.src='/captcha?code='+ Math.random()">
 <div><a href="/users/register">注册</a></div>
 
 
@@ -15,6 +24,7 @@
     $.post('/users/signin', {
       username: $('#username').val(),
       password: $('#password').val(),
+      code: $('#code').val()
       },function (data) {
         if(data.state == 0) {
           $('#msg').html(data.msg)

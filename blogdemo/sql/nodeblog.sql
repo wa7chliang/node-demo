@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : utf-8
 
- Date: 05/08/2018 11:05:17 AM
+ Date: 05/13/2018 00:55:41 AM
 */
 
 SET NAMES utf8;
@@ -32,7 +32,7 @@ CREATE TABLE `checkTime` (
 --  Records of `checkTime`
 -- ----------------------------
 BEGIN;
-INSERT INTO `checkTime` VALUES ('1', '2018-5', '[1,2,8]'), ('11', '2018-5', '[8]');
+INSERT INTO `checkTime` VALUES ('1', '2018-5', '[1,2,8,12]'), ('11', '2018-5', '[8]');
 COMMIT;
 
 -- ----------------------------
@@ -88,13 +88,13 @@ CREATE TABLE `user` (
   `avator` varchar(200) NOT NULL,
   `moment` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', 'admin', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', 'upload1523544388092.jpg', 'admin1hahahhaha'), ('7', 'test', '8a2da05455775e8987cbfac5a0ca54f3f728e274', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null), ('8', 'test2', '8a2da05455775e8987cbfac5a0ca54f3f728e274', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null), ('10', 'admin3', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null), ('11', 'admin2', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null);
+INSERT INTO `user` VALUES ('1', 'admin', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', 'upload1523544388092.jpg', 'admin1hahahhaha'), ('7', 'test', '8a2da05455775e8987cbfac5a0ca54f3f728e274', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null), ('8', 'test2', '8a2da05455775e8987cbfac5a0ca54f3f728e274', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null), ('10', 'admin3', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null), ('11', 'admin2', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null), ('12', 'ajskdha', '3d4f2bf07dc1be38b20cd6e46949a1071f9d0e3d', 'upload_7eb0f17c485156efad980e49259fd408.jpg', null);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
