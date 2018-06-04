@@ -12,7 +12,7 @@
 </template>
 <script>
   import qcloud from 'wafer2-client-sdk'
-  import {get, showSuccess} from '@/util'
+  import {showSuccess} from '@/util'
   import config from '@/config'
   import YearProgress from '@/components/YearProgress'
   export default {
@@ -45,15 +45,15 @@
       //     console.log(config.loginUrl, config.userUrl)
       //     qcloud.login({
       //       success: function (userInfo) {
-      //         qcloud.request({ 
-      //           url: config.userUrl, 
-      //           login: true, 
+      //         qcloud.request({
+      //           url: config.userUrl,
+      //           login: true,
       //           success (userRes) {
-      //             showSuccess('登录成功') 
-      //             wx.setStorageSync('userInfo', userRes.data.data) 
-      //             _self.userInfo = userRes.data.data 
+      //             showSuccess('登录成功')
+      //             wx.setStorageSync('userInfo', userRes.data.data)
+      //             _self.userInfo = userRes.data.data
       //           }
-      //         }) 
+      //         })
       //       },
       //       fail: function (err) {
       //         console.log('登录失败', err)
@@ -61,30 +61,30 @@
       //     })
       //   }
       // }
-      login (e) { 
-        let user = wx.getStorageSync('userinfo') 
-        const self = this 
-        if (!user) { 
-          qcloud.setLoginUrl(config.loginUrl) 
-          qcloud.login({ 
-            success: function (userinfo) { 
-              console.log(userinfo) 
-              qcloud.request({ 
-                url: config.userUrl, 
-                login: true, 
-                success (userRes) { 
-                  showSuccess('登录成功') 
-                  wx.setStorageSync('userinfo', userRes.data.data) 
-                  self.userinfo = userRes.data.data 
-                }, 
-              }) 
+      login (e) {
+        let user = wx.getStorageSync('userinfo')
+        const self = this
+        if (!user) {
+          qcloud.setLoginUrl(config.loginUrl)
+          qcloud.login({
+            success: function (userinfo) {
+              console.log(userinfo)
+              qcloud.request({
+                url: config.userUrl,
+                login: true,
+                success (userRes) {
+                  showSuccess('登录成功')
+                  wx.setStorageSync('userinfo', userRes.data.data)
+                  self.userinfo = userRes.data.data
+                }
+              })
             },
-            fail: function(err){ 
-              console.log(err) 
-            } 
-          }) 
-        } 
-      },
+            fail: function (err) {
+              console.log(err)
+            }
+          })
+        }
+      }
     }
   }
 </script>

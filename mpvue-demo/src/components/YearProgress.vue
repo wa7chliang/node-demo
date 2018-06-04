@@ -18,7 +18,7 @@
         }
       },
       getDayOfYear () {
-        return this.isLeapYear()? 366 : 365
+        return this.isLeapYear() ? 366 : 365
       }
     },
     computed: {
@@ -30,7 +30,7 @@
         start.setMonth(0)
         start.setDate(1)
         let offset = new Date().getTime() - start.getTime()
-        return parseInt(offset/1000/60/60/24) + 1
+        return parseInt(offset / 1000 / 60 / 60 / 24) + 1
       },
       percent () {
         return (this.days * 100 / this.getDayOfYear()).toFixed(1)
