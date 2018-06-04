@@ -5,8 +5,8 @@
       <p>{{userinfo.nickName}}</p>
     </div>
     <YearProgress />
-    <button v-if="userinfo.openId" class="btn" @click='scanBook'>添加图书</button>
-    <button v-else open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>    
+    <button class="btn" @click='scanBook'>添加图书</button>
+    <button v-if="!userinfo.openId" open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>    
     <p>{{pid}}</p>
   </div>
 </template>
@@ -37,38 +37,13 @@
           }
         })
       },
-      // login () {
-      //   let user = wx.getStorageSync('userInfo')
-      //   if (!user) {
-      //     const _self = this
-      //     qcloud.setLoginUrl(config.loginUrl)
-      //     console.log(config.loginUrl, config.userUrl)
-      //     qcloud.login({
-      //       success: function (userInfo) {
-      //         qcloud.request({
-      //           url: config.userUrl,
-      //           login: true,
-      //           success (userRes) {
-      //             showSuccess('登录成功')
-      //             wx.setStorageSync('userInfo', userRes.data.data)
-      //             _self.userInfo = userRes.data.data
-      //           }
-      //         })
-      //       },
-      //       fail: function (err) {
-      //         console.log('登录失败', err)
-      //       }
-      //     })
-      //   }
-      // }
-      login (e) {
+      login () {
         let user = wx.getStorageSync('userinfo')
         const self = this
         if (!user) {
           qcloud.setLoginUrl(config.loginUrl)
           qcloud.login({
             success: function (userinfo) {
-              console.log(userinfo)
               qcloud.request({
                 url: config.userUrl,
                 login: true,
@@ -84,6 +59,12 @@
             }
           })
         }
+      }
+    },
+    onShow () {
+      let userinfo = wx.getStorageSync('userinfo')
+      if (userinfo) {
+        this.userinfo = userinfo
       }
     }
   }
