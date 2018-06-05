@@ -5,14 +5,14 @@
       <p>{{userinfo.nickName}}</p>
     </div>
     <YearProgress />
-    <button class="btn" @click='scanBook'>添加图书</button>
     <button v-if="!userinfo.openId" open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>    
+    <button v-else class="btn" @click='scanBook'>添加图书</button>    
     <p>{{pid}}</p>
   </div>
 </template>
 <script>
   import qcloud from 'wafer2-client-sdk'
-  import {showSuccess} from '@/util'
+  import {showSuccess, post, showModal} from '@/util'
   import config from '@/config'
   import YearProgress from '@/components/YearProgress'
   export default {
@@ -29,11 +29,20 @@
       }
     },
     methods: {
+      async addBook (isbn) {
+        // await里面的异步结束
+        const res = await post('/weapp/addbook', {
+          isbn,
+          openid: this.userinfo.openId
+        })
+        showModal('添加成功', `${res.title}添加成功`)
+      },
       scanBook () {
         wx.scanCode({
           success: (res) => {
-            this.pid = res.result
-            console.log(res)
+            if (res.result) {
+              this.addBook(res.result)
+            }
           }
         })
       },
