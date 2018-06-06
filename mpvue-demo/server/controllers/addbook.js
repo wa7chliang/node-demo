@@ -25,8 +25,9 @@ module.exports = async (ctx) => {
     const tags = bookinfo.tags.map(v => {
       return `${v.title} ${v.count}`
     }).join(',')
+    const author = bookinfo.author.join(',')
     try {
-      await mysql('books').insert({isbn, openid, rate, title, image, alt, publisher, summary, price, tags})
+      await mysql('books').insert({isbn, openid, rate, title, image, alt, publisher, summary, price, tags, author})
       ctx.state.data = {
         title,
         msg: 'success'
