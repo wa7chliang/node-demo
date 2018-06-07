@@ -4,9 +4,10 @@
       <img :src="book.image" class="img" mode="aspectFit">
     </div>
     <div class="detail">
-      <div class="row">
+      <div class="row text-primary">
         <div class="right">
           {{book.rate}}
+          <Rate :value="book.rate"></Rate>
         </div>
         <div class="left">
           {{book.title}}
@@ -22,7 +23,7 @@
       </div>
       <div class="row">
         <div class="right">
-          添加人:          
+          {{book.user_info.nickName}}        
         </div>
         <div class="left">
           {{book.publisher}}          
@@ -32,8 +33,12 @@
   </div>
 </template>
 <script>
+  import Rate from '@/components/Rate'
   export default {
-    props: ['book']
+    props: ['book'],
+    components: {
+      Rate
+    }
   }
 </script>
 <style lang="scss" scoped>

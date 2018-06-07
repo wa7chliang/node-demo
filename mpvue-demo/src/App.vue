@@ -7,6 +7,14 @@
   }
 </script>
 <style>
+  .text-footer {
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  .text-primary {
+    color: #EA5A49;
+  }
   .btn {
     color: white;
     background: #EA5A49;
