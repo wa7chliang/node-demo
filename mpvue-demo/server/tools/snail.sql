@@ -12,3 +12,6 @@ create table books(
   tags varchar(100),
   author varchar(100)
 );
+
+-- 新增字段count
+alter table books add column count int default 0;
