@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TopSwiper :tops="tops"></TopSwiper>
     <Card v-for="(book, index) in books" :key="index" :book='book'></Card>
     <p class="text-footer" v-if="!more">没有更多数据</p>
   </div>
@@ -7,12 +8,14 @@
 <script>
   import {get} from '@/util'
   import Card from '@/components/Card'
+  import TopSwiper from '@/components/TopSwiper'
   export default {
     data () {
       return {
         books: [],
         page: 0,
-        more: true
+        more: true,
+        tops: []
       }
     },
     methods: {
@@ -34,11 +37,16 @@
         }
 
         wx.hideNavigationBarLoading()
+      },
+      async getTop () {
+        const tops = await get('/weapp/top')
+        this.tops = tops.list
       }
     },
     // 小程序的下拉刷新函数
     onPullDownRefresh () {
       this.getList(true)
+      this.getTop()
     },
     // 滚动底部加载
     onReachBottom () {
@@ -51,9 +59,11 @@
     },
     mounted () {
       this.getList(true)
+      this.getTop()
     },
     components: {
-      Card
+      Card,
+      TopSwiper
     }
   }
 </script>
