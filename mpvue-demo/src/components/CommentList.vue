@@ -3,7 +3,7 @@
     <div class="page-title" v-if="comments.length">
       <p>评论</p>
     </div>
-    <div class="comment" v-for="comment in comments" :key="comment.id">
+    <div class="comment" v-for="comment in comments" :key="comment.id" @click="handleClick(comment)">
       <div class="user">
         <div class="inline">
           <img :src="comment.image" mode="aspectFit" class="avatar">
@@ -23,7 +23,16 @@
 </template>
 <script>
   export default {
-    props: ['comments']
+    props: ['comments', 'type'],
+    methods: {
+      handleClick (item) {
+        if (this.type === 'user') {
+          wx.navigateTo({
+            url: '/pages/detail/main?id=' + item.bookid
+          })
+        }
+      }
+    }
   }
 </script>
 <style lang="scss" scoped>
