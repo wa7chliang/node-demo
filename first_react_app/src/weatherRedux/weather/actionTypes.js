@@ -1,0 +1,4 @@
+// 定义一部操作需要的三种actions类型
+export const FETCH_STARTED = 'WEATHER/FETCH_STARTED'
+export const FETCH_SUCCESS = 'WEATHER/FETCH_SUCCESS'
+export const FETCH_FAILURE = 'WEATHER/FETCH_FAILURE'
