@@ -1,7 +1,15 @@
 import React, {Component} from 'react'
-import {view as Weather} from './weather'
+import {view as Weather} from './weather/'
+import {connect} from 'react-redux'
+import {actions as weatherActions} from './weather/'
 
-class Weather extends Component {
+const cityCode = '101280101'
+
+class WeatherRedux extends Component {
+  componentDidMount () {
+    this.props.onSelectCity(cityCode)
+  }
+  
   render() {
     return (
       <div>
@@ -11,4 +19,12 @@ class Weather extends Component {
   }
 }
 
-export default Weather
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSelectCity: (cityCode) => {
+      dispatch(weatherActions.fetchWeather(cityCode));
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(WeatherRedux)
