@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {Provider} from 'react-redux';
 // import store from './baseview/todoredux/store';
-import store from './weatherRedux/Store'
+// import store from './weatherRedux/Store'
 // import ClickCounter from './ClickCounter';
 // import ControlPanel from './baseview/ControlPanel';
 // import Counter from './redux/view/counter'
@@ -11,12 +11,14 @@ import store from './weatherRedux/Store'
 //import Todo from './baseview/todoredux/view/todo'   // redux简单todolist
 // import Weather from './reactaxios/weather'
 import registerServiceWorker from './registerServiceWorker'
-import WeatherRedux from './weatherRedux/weather'
+// import WeatherRedux from './weatherRedux/weather'
+import Routes from './Router'
 
 ReactDOM.render(
-  <Provider store={store}>
-    <WeatherRedux />
-  </Provider>,
+  <Routes />,
+  // <Provider store={store}>
+  //   <WeatherRedux />
+  // </Provider>,
   // <Todo />,
   // <Weather />,
   document.getElementById('root')
