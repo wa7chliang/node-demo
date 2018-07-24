@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, Button, ScrollView, Dimensions} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, Button, ScrollView, Dimensions, ListView, Alert, TouchableHighlight, StatusBar} from 'react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -16,12 +16,28 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+const ds = new ListView.DataSource({    //创建ListView.DataSource数据源
+  rowHasChanged: (r1, r2) => r1 !== r2      //是否需要重绘某一行
+})
+
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      currentPage: 0
+      currentPage: 0,
+      dataSource: ds.cloneWithRows([
+        '商品1',
+        '商品2',
+        '商品3',
+        '商品4',
+        '商品5',
+        '商品6',
+        '商品7',
+        '商品8',
+        '商品9',
+        '商品10',
+      ])
     }
   }
 
@@ -45,40 +61,62 @@ export default class App extends Component<Props> {
     }, 2000)
   }
 
+  _renderRow = (rowData, sectionID, rowID) => {
+    //标签中使用value的方法值
+    return (
+      <TouchableHighlight onPress={() => Alert.alert('你单击了商品列表', null, null)}>
+        <View style={styles.row}>
+          <Text>{rowData}</Text>    
+        </View>
+      </TouchableHighlight>
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.container}>
-          <View style={styles.searchbar}>     
-            <TextInput style={styles.input} placeholder='搜索商品'></TextInput>
-            <Button style={styles.button} title='搜索'></Button>
-          </View>
-          <View style={styles.advertisement}>
-            <ScrollView
-                ref="scrollView"
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                pagingEnabled={true}>
+        <StatusBar
+          backgroundColor={'blue'}
+          barStyle={'default'}
+          networkActivityIndicatorVisible={true}></StatusBar>
+        <View style={styles.searchbar}>     
+          <TextInput style={styles.input} placeholder='搜索商品'></TextInput>
+          <Button 
+              style={styles.button} 
+              title='搜索'
+              onPress={() => Alert.alert('你单击了搜索按钮', null, null)}></Button>
+        </View>
+        <View style={styles.advertisement}>
+          <ScrollView
+              ref="scrollView"
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled={true}>
+            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图', null, null)}>
               <Text style={{
                 width: Dimensions.get('window').width,
                 height: 180,
                 backgroundColor: 'gray'
               }}>广告1</Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图', null, null)}>
               <Text style={{
                 width: Dimensions.get('window').width,
                 height: 180,
                 backgroundColor: 'orange'
               }}>广告2</Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图', null, null)}>
               <Text style={{
                 width: Dimensions.get('window').width,
                 height: 180,
                 backgroundColor: 'yellow'
               }}>广告3</Text>
-            </ScrollView>
-          </View>
-          <View style={styles.products}>
-            <Text>商品列表</Text>
-          </View>
+            </TouchableHighlight>
+          </ScrollView>
+        </View>
+        <View style={styles.products}>
+          <ListView dataSource={this.state.dataSource} renderRow={this._renderRow} />
         </View>
       </View>
     );
@@ -108,9 +146,11 @@ const styles = StyleSheet.create({
     height: 180
   },
   products: {
-    flex: 1,
-    backgroundColor: 'blue',
+    flex: 1
+  },
+  row: {
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center'
-  },
+  }
 });
