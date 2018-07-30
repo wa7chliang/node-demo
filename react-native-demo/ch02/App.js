@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, Button, ScrollView, Dimensions, ListView, Alert, TouchableHighlight, StatusBar} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, Button, ScrollView, Dimensions, ListView, Alert, TouchableHighlight, StatusBar, Image} from 'react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -19,6 +19,9 @@ const instructions = Platform.select({
 const ds = new ListView.DataSource({    //创建ListView.DataSource数据源
   rowHasChanged: (r1, r2) => r1 !== r2      //是否需要重绘某一行
 })
+
+const circleSize = 8
+const circleMargin = 5
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -37,7 +40,15 @@ export default class App extends Component<Props> {
         '商品8',
         '商品9',
         '商品10',
-      ])
+      ]),
+      advertisements: [{
+        url: 'https://img13.360buyimg.com/cms/jfs/t4090/228/1399180862/217278/206073fe/5874e621Nc675c6d0.jpg'
+      }, {
+        url: require('./advertisement-01.jpg')
+      }, {
+        url: 'https://img13.360buyimg.com/cms/jfs/t4090/228/1399180862/217278/206073fe/5874e621Nc675c6d0.jpg'
+      }],
+      searchText: '保存当前输入的文本'
     }
   }
 
@@ -73,6 +84,9 @@ export default class App extends Component<Props> {
   }
 
   render() {
+    const advertisementCount = this.state.advertisements.length
+    const indicatorWidth = circleSize * advertisementCount + circleMargin * advertisementCount * 2
+    const left = (Dimensions.get('window').width - indicatorWidth) / 2
     return (
       <View style={styles.container}>
         <StatusBar
@@ -80,40 +94,50 @@ export default class App extends Component<Props> {
           barStyle={'default'}
           networkActivityIndicatorVisible={true}></StatusBar>
         <View style={styles.searchbar}>     
-          <TextInput style={styles.input} placeholder='搜索商品'></TextInput>
+          <TextInput style={styles.input} placeholder='搜索商品'
+            onChangeText={(text) => {
+              this.setState({searchText: text})
+            }}></TextInput>
           <Button 
               style={styles.button} 
               title='搜索'
-              onPress={() => Alert.alert('你单击了搜索按钮', null, null)}></Button>
+              onPress={() => Alert.alert('搜索内容' + this.state.searchText, null, null)}></Button>
         </View>
         <View style={styles.advertisement}>
           <ScrollView
-              ref="scrollView"
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              pagingEnabled={true}>
-            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图', null, null)}>
-              <Text style={{
-                width: Dimensions.get('window').width,
-                height: 180,
-                backgroundColor: 'gray'
-              }}>广告1</Text>
-            </TouchableHighlight>
-            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图', null, null)}>
-              <Text style={{
-                width: Dimensions.get('window').width,
-                height: 180,
-                backgroundColor: 'orange'
-              }}>广告2</Text>
-            </TouchableHighlight>
-            <TouchableHighlight onPress={() => Alert.alert('你单击了轮播图', null, null)}>
-              <Text style={{
-                width: Dimensions.get('window').width,
-                height: 180,
-                backgroundColor: 'yellow'
-              }}>广告3</Text>
-            </TouchableHighlight>
+            ref="scrollView"
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled={true}>
+            {this.state.advertisements.map((advertisement, index) => {
+              if (index == 1) {
+                return (
+                  <TouchableHighlight key={index} onPress={() => Alert.alert('你单击了轮播图' + index, null, null)}>
+                    <Image style={styles.advertisementContent}
+                      source={advertisement.url}></Image>
+                  </TouchableHighlight>
+                )
+              } else {
+                return (
+                  <TouchableHighlight key={index} onPress={() => Alert.alert('你单击了轮播图' + index, null, null)}>
+                    <Image style={styles.advertisementContent}
+                      source={{uri: advertisement.url}}></Image>
+                  </TouchableHighlight>
+                )
+              }
+            })}
           </ScrollView>
+          <View style={[
+            styles.indicator, {left: left}
+          ]}>
+            {this.state.advertisements.map((advertisement, index) => {
+              return (
+                <View key={index}
+                  style={(index === this.state.currentPage)
+                    ? styles.circleSelected
+                    : styles.circle} />)
+            })}
+          </View>
         </View>
         <View style={styles.products}>
           <ListView dataSource={this.state.dataSource} renderRow={this._renderRow} />
@@ -137,13 +161,37 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     borderColor: 'gray',
-    borderWidth: 2
+    borderWidth: 2,
+    borderRadius: 10
   },
   button: {
     flex: 1
   },
   advertisement: {
     height: 180
+  },
+  advertisementContent: {
+    width: Dimensions.get('window').width,
+    height: 180
+  },
+  indicator: {
+    position: 'absolute',
+    top: 160,
+    flexDirection: 'row'
+  },
+  circle: {
+    width: circleSize,
+    height: circleSize,
+    borderRadius: circleSize / 2,
+    backgroundColor: 'gray',
+    marginHorizontal: circleMargin
+  },
+  circleSelected: {
+    width: circleSize,
+    height: circleSize,
+    borderRadius: circleSize / 2,
+    backgroundColor: 'white',
+    marginHorizontal: circleMargin
   },
   products: {
     flex: 1
