@@ -67,6 +67,6 @@ module.exports = {
         })
       }
     }
-    // cache: true  不能开启：原因 https://github.com/nuxt/nuxt.js/issues/4513
+    // cache: true // 不能开启：原因 https://github.com/nuxt/nuxt.js/issues/4513
   }
 }
