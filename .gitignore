@@ -2,6 +2,8 @@
 node_modules/
 dist/
 mpvue-demo/node_modules/
+mpvue-demo/project.config.json
+mpvue-demo/server/config.js
 first_react_app/node_modules/
 mpvue-demo/server/node_modules/
 mt-app/node_modules/
